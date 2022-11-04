@@ -9,3 +9,6 @@ copy-paste spin
 
 sudo apt-get install ckermit -y
 sudo adduser $USER dialout
+
+
+export tftpboot=$(grep '^TFTP_DIRECTORY=' /etc/default/tftpd-hpa | sed 's/^[^"]*//g')
