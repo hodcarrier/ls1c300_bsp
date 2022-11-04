@@ -3,3 +3,9 @@ hello, this is a useless bsp for ls1c300.
 Here is the excel tool for calculate clk for ls1c300.
 
 https://github.com/hodcarrier/ls1c300_bsp/blob/master/clk-ls1c300.xlsx
+
+prepare
+copy-paste spin
+
+sudo apt-get install ckermit -y
+sudo adduser $USER dialout
