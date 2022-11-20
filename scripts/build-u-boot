@@ -1,0 +1,28 @@
+#!/usr/bin/bash
+
+if [ -f ~/loongson-ls1c300-toolchain ]; then
+	echo "toolchain [OK]"
+else
+
+wget https://mirrors.edge.kernel.org/pub/tools/crosstool/files/bin/x86_64/12.2.0/x86_64-gcc-12.2.0-nolibc-mips-linux.tar.gz
+mkdir ~/opt -p
+tar -xf x86_64-gcc-12.2.0-nolibc-mips-linux.tar.gz -C ~/opt
+touch ~/loongson-ls1c300-toolchain
+
+fi
+
+if [ -d u-boot ]; then
+echo "u-boot source [OK]"
+else
+git clone https://github.com/hodcarrier/u-boot.git
+fi
+
+export PATH="$PATH:/home/duhuanpeng/opt/gcc-12.2.0-nolibc/mips-linux/bin"
+export ARCH="mips"
+export CROSS_COMPILE="mips-linux-"
+export tftpboot=$(grep '^TFTP_DIRECTORY=' /etc/default/tftpd-hpa | sed 's/^[^"]*//g')
+echo ${tftpboot}
+
+cd u-boot
+make ls1c300_defconfig
+make 

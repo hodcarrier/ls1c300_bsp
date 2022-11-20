@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+
+export PATH="$PATH:/home/duhuanpeng/opt/gcc-12.2.0-nolibc/mips-linux/bin"
+cd /home/duhuanpeng/mirror/linux
+
+export ARCH="mips"
+export CROSS_COMPILE="mips-linux-"
+export tftpboot=$(grep '^TFTP_DIRECTORY=' /etc/default/tftpd-hpa | sed 's/^[^"]*//g')
+echo ${tftpboot}
+
+ARG1=$1
+
+if [ "$ARG1" = "clean" ]; then
+make ls1c300_defconfig
+make clean
+fi
+
+if [ -z ${ARG1} ]; then
+make vmlinuz -j $(nproc)
+scp vmlinuz black:/srv/tftp/
+fi
